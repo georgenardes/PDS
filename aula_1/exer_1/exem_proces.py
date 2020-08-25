@@ -32,3 +32,8 @@ with open(read_path, 'rb') as f:
     axs[1].plot(t, data_o[: len(t)])
     plt.show()
     '''
+
+
+with open(r'../result.pcm', 'wb') as f:
+    for d in data_o:
+        f.write(d)
