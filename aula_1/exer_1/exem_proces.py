@@ -10,6 +10,8 @@ with open(read_path, 'rb') as f:
     buf = f.read()
     data_i = np.frombuffer(buf, dtype='int16')
     data_len = len(data_i)
+    for i in range(data_len):
+        print("pos", i, data_i[i])
 
     # replica do arquivo lido para salvar o resultado
     data_o = np.zeros_like(data_i)
