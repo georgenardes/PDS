@@ -12,7 +12,7 @@ a0 = .5
 a1 = .3
 a2 = .2
 
-with open('../voz_ruido_.pcm', 'rb') as f:
+with open('../teste.pcm', 'rb') as f:
     buf = f.read()
     data_i = np.frombuffer(buf, dtype='int16')
 

@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 sample_rate = 8000
-media_len = 9
+media_len = 32
 media_buf = np.zeros(media_len)
 
-read_path = "../voz_ruido_.pcm"
+read_path = "../swip.pcm"
 with open(read_path, 'rb') as f:
     buf = f.read()
     data_i = np.frombuffer(buf, dtype='int16')
@@ -22,7 +22,7 @@ with open(read_path, 'rb') as f:
         media_buf[1:media_len] = buf
 
 # amostra de 100 ms
-t = np.arange(0, 0.1, 1 / sample_rate)
+t = np.arange(0, data_len/sample_rate, 1 / sample_rate)
 
 ###############
 #   plot

@@ -29,7 +29,7 @@ int main()
 
     FILE *input;
     printf("Abrindo arquivo 1.\n");
-    input = fopen("teste.pcm", "rb");
+    input = fopen("../swip.pcm", "rb");
     if(input == NULL){
         printf("Erro ao abrir input arquivo!");
         return 0;
