@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1601379144 source:c:\users\user\desktop\univali\pds\aula_6\fir_mm\fir_mm.c
+	<stdio.h>
+	<fcntl.h>
+	<io.h>
+	"coefs_mm_4.dat"
+
+1601379307 c:\users\user\desktop\univali\pds\aula_6\fir_mm\coefs_mm_4.dat
+

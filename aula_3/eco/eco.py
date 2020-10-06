@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 Fs = 8000
-t1 = 1/1     # 1 ms
-t2 = 1.5/1   # 1.5 ms
+t1 = 1/1     # 1 s
+t2 = 1.5/1   # 1.5 s
 
 n1 = int(t1 * Fs)
 n2 = int(t2 * Fs)
