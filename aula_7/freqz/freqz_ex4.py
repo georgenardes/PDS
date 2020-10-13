@@ -8,7 +8,7 @@ from matplotlib.pyplot import plot, subplot, xlabel, ylabel, title, grid, axis, 
 # A
 num = 3 * [1, 1.2]
 den = [1, -2.8, 0.45]
-w, h = freqz(num, den, fs=8000)
+w, h = freqz(num, den)
 subplot(3, 1, 1)
 plot(w, 20 * log10(abs(h)), 'b')
 grid()
@@ -16,7 +16,7 @@ grid()
 # B
 num = [1, 0]
 den = [1, -6.2, 1.08]
-w, h = freqz(num, den, fs=8000)
+w, h = freqz(num, den)
 subplot(3, 1, 2)
 plot(w, 20 * log10(abs(h)), 'g')
 grid()
@@ -24,7 +24,7 @@ grid()
 # C
 num = [1, 0.9]
 den = [1, 1, 0.41]
-w, h = freqz(num, den, fs=8000)
+w, h = freqz(num, den)
 subplot(3, 1, 3)
 plot(w, 20 * log10(abs(h)), 'r')
 grid()
