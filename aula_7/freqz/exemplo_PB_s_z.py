@@ -31,7 +31,6 @@ print(type(H))
 bode(H)
 
 # Aplicando a transf Biliner S->Z
-
 Fs = 8000   # Frequência de amostragem
 Ts = 1/Fs
 
@@ -44,4 +43,3 @@ Hd = cont2discrete(H, Ts, 'bilinear')     # Convertendo para discreto
 figure(2)
 plot(w, 20*log10(abs(H)))
 grid()
-
