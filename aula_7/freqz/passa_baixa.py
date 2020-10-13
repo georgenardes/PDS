@@ -1,5 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import plot, subplot, xlabel, ylabel, title, grid, axis, figure, show
+from scipy.signal import freqz
+import scipy.signal as signal
+import numpy as np
+from numpy import pi, sin, log10, zeros
 
 sample_rate = 8000
 media_buf = np.zeros(2)
@@ -43,12 +48,30 @@ t = np.arange(0, data_len/sample_rate, 1 / sample_rate)
 
 ###############
 #   plot
+subplot(2, 1, 1)
 plt.stem(t, data_i[: len(t)], "k-", "ko", "k-", label="Input")
 plt.plot(t, data_o[: len(t)], label="Output")
 plt.legend()
 plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
-plt.show()
+
+
+###############
+#   plot
+# Usando freqz para obter a resposta em frequencia
+num_ = [a, a]
+den_ = [1, b]
+
+[w, h] = freqz(num_, den_, worN=Fs, fs=Fs)
+
+subplot(2, 1, 2)
+plot(w, 20 * log10(abs(h)), 'b')
+
+title('Magnitude da resposta em frequencia')
+grid()
+
+
+show()
 
 
 file_name = "../media_manual_result.pcm"

@@ -1,4 +1,8 @@
+from scipy.signal import freqz
+import scipy.signal as signal
 import numpy as np
+from numpy import pi, sin, log10, zeros
+from matplotlib.pyplot import plot, subplot, xlabel, ylabel, title, grid, axis, figure, show
 import matplotlib.pyplot as plt
 
 sample_rate = 8000
@@ -21,6 +25,7 @@ c = (F1-wc) / (F1+wc)
 
 print(a)
 print(b)
+print(c)
 
 read_path = "../swip.pcm"
 with open(read_path, 'rb') as f:
@@ -47,12 +52,17 @@ t = np.arange(0, data_len/sample_rate, 1 / sample_rate)
 
 ###############
 #   plot
+subplot(1, 1, 1)
 plt.stem(t, data_i[: len(t)], "k-", "ko", "k-", label="Input")
 plt.plot(t, data_o[: len(t)], label="Output")
 plt.legend()
 plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
-plt.show()
+
+grid()
+
+
+show()
 
 
 file_name = "../media_manual_result.pcm"

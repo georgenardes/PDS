@@ -7,7 +7,7 @@ from matplotlib.pyplot import plot, subplot, xlabel, ylabel, title, grid, axis, 
 
 # usando freqz
 # A
-num = 3 * [1, -1.2]
+num = [3, -3.2]
 den = [1, -1.4, 0.45]
 w, h = freqz(num, den)
 subplot(3, 1, 1)
