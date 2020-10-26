@@ -10,7 +10,7 @@ sample_rate = 8000
 media_buf = np.zeros(2)
 saida = 0
 
-Fc = 1000
+Fc = 2000
 Fs = sample_rate
 
 # calcula FC

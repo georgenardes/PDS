@@ -28,7 +28,7 @@ with open(r'../sig_deg.pcm', 'wb') as f:
 
 ###############
 #   seno
-f = 400
+f = 10
 sig_sin = (np.sin(2*np.pi*t*f)*1000).astype(np.int16)
 
 with open(r'../sig_sin.pcm', 'wb') as f:
@@ -37,7 +37,7 @@ with open(r'../sig_sin.pcm', 'wb') as f:
 
 ###############
 #   exp
-sig_exp = np.exp2(t)
+sig_exp = np.exp2(-t)
 
 with open(r'../sig_exp.pcm', 'wb') as f:
     for d in sig_exp:

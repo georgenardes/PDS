@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 a = .5
 
 w = np.arange(-1*np.pi, np.pi, np.pi/100)
