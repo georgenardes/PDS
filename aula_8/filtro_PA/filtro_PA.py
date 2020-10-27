@@ -3,14 +3,13 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import plot, subplot, xlabel, ylabel, title, grid, axis, figure, show
 from scipy.signal import freqz
 import scipy.signal as signal
-import numpy as np
 from numpy import pi, sin, log10, zeros
 
 sample_rate = 8000
 buffer = np.zeros(2)
 saida = 0
 
-Fc = 1000
+Fc = 400
 Fs = sample_rate
 
 # calcula FC

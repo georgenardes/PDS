@@ -1,34 +1,32 @@
 import numpy as np
-from numpy import pi, cos, sin
+from numpy import pi, cos, sin, log10
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import plot, subplot, xlabel, ylabel, title, grid, axis, figure, show
 from scipy.signal import freqz
-import scipy.signal as signal
-import scipy.fftpack
 
 
-sample_rate = 5000
+sample_rate = 8000
 
 # definindo a frequencia de corte
 # tem que estar entre 0 e 0.5
-fc = 0.014
+fc = 800/sample_rate
 
 # definindo o roll-off
 # BW é a largura em samples da banda de transição
 # Tem que estar em 0 e 0.5
-BW = 0.5
-# M = 4 / BW
-M = 8
+BW = 4000/sample_rate
+M = 4 / BW
 
 # constant K
 K = 1
 
 # -M/2 to M/2
-i = np.arange(0, M, 1/sample_rate)
+i = np.arange(0.00000001, M, 1/sample_rate)
 
 # 16-4
 h_i = K * (sin(2*pi*fc*(i-M/2))/(i-M/2)) * (0.42 - 0.5*cos(2*pi*i/M) + 0.08*cos(4*pi*i/M))
-
+h_i = h_i / np.sum(h_i)
+print(h_i)
 
 ###############
 #   plot
@@ -38,10 +36,12 @@ plt.legend()
 plt.xlabel("Time [s]")
 plt.ylabel("Amplitude")
 
-yf = scipy.fftpack.fft(h_i)
+
+[w, h] = freqz(h_i, worN=sample_rate, fs=1)
 
 subplot(2, 1, 2)
-plot(i, yf, 'b')
+# plot(w, 20 * log10(abs(h)), 'b')
+plot(w, abs(h), 'b')
 plt.xlabel("Freq")
 plt.ylabel("Magnitude")
 
