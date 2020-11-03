@@ -25,6 +25,8 @@ sample_rate = 8000
 # tem que estar entre 0 e 0.5
 fc_pb = 600/sample_rate
 fc_pa = 3000/sample_rate
+fc_pf_pb = 600/sample_rate
+fc_pf_pa = 3000/sample_rate
 
 # definindo o roll-off
 # BW é a largura em samples da banda de transição
@@ -36,9 +38,9 @@ M = 4 / BW
 h_pb = gera_coef(M, fc_pb)
 
 # filtro PF
-h_pf2 = gera_coef(M, fc_pa)        # passa baixa
+h_pf2 = gera_coef(M, fc_pf_pa)        # passa baixa
 
-h_pf1 = gera_coef(M, fc_pb)        # passa alta
+h_pf1 = gera_coef(M, fc_pf_pb)        # passa alta
 h_pf1 = -h_pf1
 h_pf1[int(M/2)] += 1
 h_pf = np.convolve(h_pf1, h_pf2)
@@ -49,9 +51,9 @@ h_pa = -h_pa
 h_pa[int(M/2)] += 1
 
 # ganhos
-g_pb = .5
-g_pf = .7
-g_pa = .1
+g_pb = 0.7
+g_pf = 0.5
+g_pa = 0.2
 
 
 read_path = "../swip.pcm"

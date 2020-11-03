@@ -9,13 +9,15 @@ sample_rate = 8000
 
 # definindo a frequencia de corte
 # tem que estar entre 0 e 0.5
-fc = 800/sample_rate
+fc = 400/sample_rate
 
 # definindo o roll-off
 # BW é a largura em samples da banda de transição
 # Tem que estar em 0 e 0.5
 BW = 200/sample_rate
 M = 4 / BW
+
+print(M)
 
 # constant K
 K = 1
@@ -46,7 +48,7 @@ for ind in range(int(M)):
 h2 = h2 / np.sum(h2)
 
 
-read_path = "../swip.pcm"
+read_path = "../seno_400.pcm"
 with open(read_path, 'rb') as f:
     buf = f.read()
     data_i = np.frombuffer(buf, dtype='int16')
@@ -63,7 +65,7 @@ t = np.arange(0, data_len/sample_rate, 1 / sample_rate)
 ###############
 #   plot
 subplot(2, 1, 1)
-plt.plot(t, data_i[: len(t)], "k-", "ko", "k-", label="Input")
+plt.plot(t, data_i[: len(t)], "k-", label="Input")
 plt.plot(t, data_o[: len(t)], label="Output")
 plt.legend()
 plt.xlabel("Time [s]")
@@ -76,10 +78,10 @@ print("calculating freqz")
 
 print("printing freqz")
 subplot(2, 1, 2)
-# plot(w1, 20 * log10(abs(h1)), label="freqz1")
-# plot(w2, 20 * log10(abs(h2)), label="freqz2")
-plot(w1, abs(h1), label="blackman")
-plot(w2, abs(h2), label="hamming")
+plot(w1, 20 * log10(abs(h1)), label="freqz1")
+plot(w2, 20 * log10(abs(h2)), label="freqz2")
+# plot(w1, abs(h1), label="blackman")
+# plot(w2, abs(h2), label="hamming")
 plt.legend()
 plt.xlabel("Freq")
 plt.ylabel("Amplitude")

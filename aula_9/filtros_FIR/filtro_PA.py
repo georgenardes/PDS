@@ -9,13 +9,15 @@ sample_rate = 8000
 
 # definindo a frequencia de corte
 # tem que estar entre 0 e 0.5
-fc = 800/sample_rate
+fc = 2000/sample_rate
 
 # definindo o roll-off
 # BW é a largura em samples da banda de transição
 # Tem que estar em 0 e 0.5
-BW = 200/sample_rate
+BW = 100/sample_rate
 M = 4 / BW
+
+print(M)
 
 # constant K
 K = 1

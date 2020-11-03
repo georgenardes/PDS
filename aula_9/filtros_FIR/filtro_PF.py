@@ -59,7 +59,7 @@ t = np.arange(0, data_len/sample_rate, 1 / sample_rate)
 ###############
 #   plot
 subplot(2, 1, 1)
-plt.plot(t, data_i[: len(t)], "k-", "ko", "k-", label="Input")
+plt.plot(t, data_i[: len(t)], "k-", label="Input")
 plt.plot(t, data_o[: len(t)], label="Output")
 plt.legend()
 plt.xlabel("Time [s]")
