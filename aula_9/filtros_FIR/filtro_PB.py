@@ -47,6 +47,12 @@ for ind in range(int(M)):
 # normalize
 h2 = h2 / np.sum(h2)
 
+# salva coeficientes
+coefs_name = "../coefs_pb.dat"
+with open(coefs_name, 'w') as f:
+    for d in h2:
+        f.write(str(d.astype(np.float16))+",\n")
+
 
 read_path = "../seno_400.pcm"
 with open(read_path, 'rb') as f:
@@ -78,10 +84,10 @@ print("calculating freqz")
 
 print("printing freqz")
 subplot(2, 1, 2)
-plot(w1, 20 * log10(abs(h1)), label="freqz1")
-plot(w2, 20 * log10(abs(h2)), label="freqz2")
-# plot(w1, abs(h1), label="blackman")
-# plot(w2, abs(h2), label="hamming")
+# plot(w1, 20 * log10(abs(h1)), label="freqz1")
+# plot(w2, 20 * log10(abs(h2)), label="freqz2")
+plot(w1, abs(h1), label="blackman")
+plot(w2, abs(h2), label="hamming")
 plt.legend()
 plt.xlabel("Freq")
 plt.ylabel("Amplitude")

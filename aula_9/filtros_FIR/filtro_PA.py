@@ -16,7 +16,6 @@ fc = 2000/sample_rate
 # Tem que estar em 0 e 0.5
 BW = 100/sample_rate
 M = 4 / BW
-
 print(M)
 
 # constant K
@@ -53,6 +52,12 @@ h1[int(M/2)] += 1
 
 h2 = -h2
 h2[int(M/2)] += 1
+
+# salva coeficientes
+coefs_name = "../coefs_pa.dat"
+with open(coefs_name, 'w') as f:
+    for d in h2:
+        f.write(str(d.astype(np.float16))+",\n")
 
 
 read_path = "../swip.pcm"

@@ -31,6 +31,7 @@ fc2 = 800/sample_rate
 # Tem que estar em 0 e 0.5
 BW = 200/sample_rate
 M = 4 / BW
+print(M)
 
 # filtro PA
 h_pa = gera_coef(M, fc1)
@@ -40,6 +41,14 @@ h_pa[int(M/2)] += 1
 # filtro PB
 h_pb = gera_coef(M, fc2)
 
+# filtro PF
+h_pf = np.convolve(h_pa, h_pb, mode="same")
+
+# salva coeficientes
+coefs_name = "../coefs_pf.dat"
+with open(coefs_name, 'w') as f:
+    for d in h_pf:
+        f.write(str(d.astype(np.float16))+",\n")
 
 read_path = "../swip.pcm"
 with open(read_path, 'rb') as f:
@@ -48,8 +57,7 @@ with open(read_path, 'rb') as f:
     data_len = len(data_i)
 
     # replica do arquivo lido para salvar o resultado
-    data_o = np.convolve(h_pa, data_i)
-    data_o = np.convolve(h_pb, data_o)
+    data_o = np.convolve(h_pf, data_i)
     data_o = data_o.astype(dtype='int16')
 
 

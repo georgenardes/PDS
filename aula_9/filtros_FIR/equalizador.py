@@ -43,7 +43,7 @@ h_pf2 = gera_coef(M, fc_pf_pa)        # passa baixa
 h_pf1 = gera_coef(M, fc_pf_pb)        # passa alta
 h_pf1 = -h_pf1
 h_pf1[int(M/2)] += 1
-h_pf = np.convolve(h_pf1, h_pf2)
+h_pf = np.convolve(h_pf1, h_pf2, mode="same")
 
 # filtro PA
 h_pa = gera_coef(M, fc_pa)
@@ -54,6 +54,26 @@ h_pa[int(M/2)] += 1
 g_pb = 0.7
 g_pf = 0.5
 g_pa = 0.2
+
+
+# salva coeficientes pb
+coefs_name = "../coefs_pb_eq.dat"
+with open(coefs_name, 'w') as f:
+    for d in h_pb:
+        f.write(str(d.astype(np.float16))+",\n")
+
+# salva coeficientes pf
+coefs_name = "../coefs_pf_eq.dat"
+with open(coefs_name, 'w') as f:
+    for d in h_pf:
+        f.write(str(d.astype(np.float16))+",\n")
+
+
+# salva coeficientes pa
+coefs_name = "../coefs_pa_eq.dat"
+with open(coefs_name, 'w') as f:
+    for d in h_pa:
+        f.write(str(d.astype(np.float16))+",\n")
 
 
 read_path = "../swip.pcm"
