@@ -65,17 +65,17 @@ int main() {
     n_amost = fread( & entrada, sizeof(short), 1, in_file);
     sample[0] = entrada;
 
-    //Convolução e acumulação
+    //Convolução e acumulação PB
     for (n = 0; n < NSAMPLES; n++) {
       y += g_pb * coef_pb[n] * sample[n];
     }
 
-    //Convolução e acumulação
+    //Convolução e acumulação PF
     for (n = 0; n < NSAMPLES; n++) {
       y += g_pf* coef_pf[n] * sample[n];
     }
 
-    //Convolução e acumulação
+    //Convolução e acumulação PA
     for (n = 0; n < NSAMPLES; n++) {
       y += g_pa * coef_pa[n] * sample[n];
     }
