@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1605570877 source:c:\users\user\desktop\univali\pds\aula_11\cancela_eco_c\fir_adpt_c.c
+	<stdio.h>
+	<fcntl.h>
+	<io.h>
+

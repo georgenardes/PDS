@@ -50,7 +50,7 @@ for i in range(iteracoes):
     print(erro[i])
 
     # atualiza coefs
-    wn = wn + 2 * mi * en * xn
+    wn = wn + 2.0 * mi * en * xn
 
 print("adaptado", wn[0:2])
 print("sistema", coefs[0:2])
@@ -60,7 +60,7 @@ file_name = "../resultado_coefs.pcm"
 with open(file_name, 'wb') as f:
     yn = np.convolve(wn, data_i, mode="same")
     for d in yn:
-        f.write(d.astype(np.float16))
+        f.write(d.astype(np.int16))
 
 # salva coeficientes
 coefs_name = "../coefs_adptados.dat"

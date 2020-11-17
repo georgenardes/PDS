@@ -18,7 +18,7 @@ h_truncated = np.sin(2*np.pi*fc*i)/(i*np.pi)
 i = np.arange(0, M, 1/sample_rate)
 
 # função sinc (low-pass filter)
-w_black = 0.42 - 0.5 * np.cos(2*np.pi*i/M) - 0.08 * np.cos(4*np.pi*i/M)
+w_black = 0.42 - 0.5 * np.cos(2*np.pi*i/M) + 0.08 * np.cos(4*np.pi*i/M)
 
 w_windowed = w_black * h_truncated
 w_windowed = w_windowed / np.sum(w_windowed)

@@ -18,12 +18,15 @@ int main() {
     0x0
   };
 
+  float y_pb = 0;
+  float y_pf = 0;
+  float y_pa = 0;
   float y = 0;
 
   // ganhos dos filtros
-  float g_pb = 0.1;
+  float g_pb = 0.7;
   float g_pf = 0.5;
-  float g_pa = 0.9;
+  float g_pa = 0.3;
 
   //Carregando os coeficientes do filtro pb
   float coef_pb[NSAMPLES] = {
@@ -59,7 +62,9 @@ int main() {
   do {
 
     //zera saída do filtro
-    y = 0;
+    y_pb = 0;
+    y_pf = 0;
+    y_pa = 0;
 
     //lê dado do arquivo
     n_amost = fread( & entrada, sizeof(short), 1, in_file);
@@ -67,18 +72,21 @@ int main() {
 
     //Convolução e acumulação PB
     for (n = 0; n < NSAMPLES; n++) {
-      y += g_pb * coef_pb[n] * sample[n];
+      y_pb += coef_pb[n] * sample[n];
     }
 
     //Convolução e acumulação PF
     for (n = 0; n < NSAMPLES; n++) {
-      y += g_pf* coef_pf[n] * sample[n];
+      y_pf += coef_pf[n] * sample[n];
     }
 
     //Convolução e acumulação PA
     for (n = 0; n < NSAMPLES; n++) {
-      y += g_pa * coef_pa[n] * sample[n];
+      y_pa += coef_pa[n] * sample[n];
     }
+
+    // soma as saidas
+    y = g_pb*y_pb + g_pf*y_pf + g_pa*y_pa;
 
     //desloca amostra
     for (n = NSAMPLES - 1; n > 0; n--) {

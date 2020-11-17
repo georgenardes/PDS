@@ -7,3 +7,11 @@
 
 1601379307 c:\users\user\desktop\univali\pds\aula_6\fir_mm\coefs_mm_4.dat
 
+1605614953 source:c:\users\user\desktop\univali\pds\aula_10\fir_adpt_c\fir_adpt_c.c
+	<stdio.h>
+	<fcntl.h>
+	<io.h>
+	"..\coefs_pa.dat"
+
+1604883546 c:\users\user\desktop\univali\pds\aula_10\coefs_pa.dat
+

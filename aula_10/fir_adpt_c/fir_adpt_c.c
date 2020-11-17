@@ -10,20 +10,24 @@ George
 #define NSAMPLES 320 // quantidade de coef
 
 int main() {
-  FILE * in_file, * out_file;
+  FILE *in_file, *out_file;
   int i, n, n_amost;
 
   short entrada, saida;
-  short sample[NSAMPLES] = {
-    0x0
-  };
+  short sample[NSAMPLES];
 
-  float y = 0;
+  double dn = 0.0;
+  double yn = 0.0;
+  double erro = 0.0;
 
-  //Carregando os coeficientes do filtro média móvel
+  //Carregando os coeficientes de um filtro
   float coef[NSAMPLES] = {
-        #include "..\coefs_adaptados.dat" // NSAMPLES
+        #include "..\coefs_pa.dat" // NSAMPLES
   };
+
+  // coeficientes para descobrir sinal
+  double coef_adpt [NSAMPLES];
+
 
   /* abre os arquivos de entrada e saida */
   if ((in_file = fopen("../ruido_branco.pcm", "rb")) == NULL) {
@@ -38,21 +42,38 @@ int main() {
   // zera vetor de amostras
   for (i = 0; i < NSAMPLES; i++) {
     sample[i] = 0;
+    coef_adpt[i] = 0.0;
   }
+
 
   // execução do filtro
   do {
 
     //zera saída do filtro
-    y = 0;
+    dn = 0;
+    yn = 0;
 
     //lê dado do arquivo
     n_amost = fread( & entrada, sizeof(short), 1, in_file);
     sample[0] = entrada;
 
-    //Convolução e acumulação
+    //Convolução e acumulação DN
     for (n = 0; n < NSAMPLES; n++) {
-      y += coef[n] * sample[n];
+      dn += coef[n] * sample[n];
+    }
+
+    //Convolução e acumulação YN
+    for (n = 0; n < NSAMPLES; n++) {
+      yn += coef_adpt[n] * sample[n];
+    }
+
+    // calculo erro
+    erro = dn - yn;
+
+    printf("erro %f\n", erro);
+
+    for (n = 0; n < NSAMPLES; n++) { // atualiza coefs
+        coef_adpt[n] = coef_adpt[n] + 2.0 * 0.000000000001 * erro * sample[n];
     }
 
     //desloca amostra
@@ -60,7 +81,8 @@ int main() {
       sample[n] = sample[n - 1];
     }
 
-    saida = (short) y;
+    // cast para escrita
+    saida = (short) erro;
 
     //escreve no arquivo de saída
     fwrite( & saida, sizeof(short), 1, out_file);
