@@ -51,7 +51,7 @@ h2 = h2 / np.sum(h2)
 coefs_name = "../coefs_pb.dat"
 with open(coefs_name, 'w') as f:
     for d in h2:
-        f.write(str(d.astype(np.float16))+",\n")
+        f.write(str((d*32768.).astype(np.short))+",\n")
 
 
 read_path = "../seno_400.pcm"
