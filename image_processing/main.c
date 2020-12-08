@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <assert.h>
-#include <math.h>
+
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "uwimg/stb_image.h"
@@ -33,17 +31,38 @@ Imagem carrega_imagem (const char *caminho, int num_canais)
     return im;
 }
 
-void salva_imagem (const char *caminho, Imagem im)
+
+Imagem cria_imagem (int w,int h,int c)
+{
+    Imagem out;
+
+    // metadata
+    if (c <= 0) c = 1;
+    out.c = c;
+    out.w = w;
+    out.h = h;
+
+    // aloca memoria para a imagem
+    out.data = calloc(h*w*c, sizeof(char));
+
+    return out;
+}
+
+void libera_image(Imagem im)
+{
+    free(im.data);
+}
+
+void salva_imagem (const char *caminho, Imagem im, int png)
 {
     char buff[256];
     int success = 0;
-    
+
     sprintf(buff, "%s.jpg", caminho);
     success = stbi_write_jpg(buff, im.w, im.h, im.c, im.data, 100);
     
     if(!success) fprintf(stderr, "Failed to write image %s\n", buff);
 }
-
 
 void set_pixel(Imagem im, int x, int y, int c, unsigned char v)
 {
@@ -82,68 +101,59 @@ unsigned char get_pixel(Imagem im, int x, int y, int c)
     return pixel;
 }
 
-Imagem cria_imagem (int w,int h,int c)
-{
-    Imagem out;
-
-    // metadata
-    if (c <= 0) c = 1;
-    out.c = c;
-    out.w = w;
-    out.h = h;
-
-    // aloca memoria para a imagem
-    out.data = calloc(h*w*c, sizeof(char));
-
-    return out;
-}
-
-void libera_image(Imagem im)
-{
-    free(im.data);
-}
 
 Imagem convolve (Imagem im, char *kernel, int kernel_size)
 {
     Imagem resultado = cria_imagem(im.w, im.h, 1);
-
+	
     // ==============
     short new_pix = 0;
+    
+    unsigned short i, j, x,  y;
 
     // caminha pelas colunas
-    for(int i = 0; i < im.w; i++)
+    for(i = 0; i < im.w; i++)
     {
+    	
         // caminha pela linhas
-        for(int j = 0; j < im.h; j++)
+        for(j = 0; j < im.h; j++)
         {
+        	
             // convolui cada pixel
-            for(int x = i-1; x <= i+1; x++)
+            for(x = i-1; x <= i+1; x++)
             {
-                for(int y = j-1; y <= j+1; y++)
+                for(y = j-1; y <= j+1; y++)
                 {
                     new_pix += (short) get_pixel(im, x, y, 0) * kernel[(y+1-j)*kernel_size + x+1-i];
                 }
             }
+            
 
             // abs
             new_pix = abs(new_pix);
-            if (new_pix > 255) new_pix = 255;
-
+            
+            // clip values 
+            if (new_pix > 255){
+           		new_pix = 255;
+            }
+                        
             set_pixel(resultado, i, j, 0, new_pix);
-
+			            
             // zera resultado convolução
             new_pix = 0;
         }
+       
     }
     // ==============
-
+	
     return resultado;
 }
 
+
 int main()
 {
-    Imagem im = carrega_imagem("data/aria.png", 1);
-
+    Imagem im = carrega_imagem("..\\data\\helens4.jpg", 1);
+    
     // cria kernel do filtro de LAPLACE
     char laplace[3*3] = {0,1,0,1,-4,1,0,1,0};
 
@@ -153,14 +163,19 @@ int main()
     // cria kernel do filtro de Sobel horizontal
     char sobel_h[3*3] = {1,2,1,0,0,0,-1,-2,-1};
 
-    // convolui imagem com kernel
-    Imagem im2 = convolve(im, laplace, 3);
-
+	
+    // cria imagem para armazenar o resultado
+    Imagem im2;
+    
+    // convolve com o filtro especificado
+    im2 = convolve(im, sobel_h, 3);
+    
     // salva imagem criada
-    salva_imagem("laplace", im2, 1);
-
+    salva_imagem("..\\resultado", im2, 1);
+    
     libera_image(im);
     libera_image(im2);
+
 
     return 0;
 }
